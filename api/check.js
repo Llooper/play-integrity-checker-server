@@ -1,17 +1,17 @@
 import { google } from "googleapis";
+import express, { json } from "express";
 const playintegrity = google.playintegrity('v1');
 
 
 const packageName = process.env.PACKAGE_NAME
-const client_email = process.env.CLIENT_EMAIL
-const private_key = process.env.PRIVATE_KEY
+const privatekey = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS)
 
 async function getTokenResponse(token) {
 
     let jwtClient = new google.auth.JWT(
-        client_email,
+        privatekey.client_email,
         null,
-        private_key,
+        privatekey.private_key,
         ['https://www.googleapis.com/auth/playintegrity']);
 
     google.options({ auth: jwtClient });
